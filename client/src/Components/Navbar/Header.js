@@ -2,18 +2,34 @@ import React, { useState } from 'react';
 import { Menu } from 'antd';
 import { HomeOutlined, SettingOutlined, UserOutlined, UserAddOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import firebase from 'firebase';
+import { useHistory } from 'react-router-dom';      //Header is not a route on its own; so history cannot be accessed. This hook is used to resolve that.
+
+
 const { SubMenu } = Menu;
-
-
 const Header = () =>
 {
     const [current, setCurrent] = useState('');
+    let dispatch = useDispatch();
+    let history = useHistory();
+    
     const { Item } = Menu;
     const handleClick = (e) =>
     {
         setCurrent(e.key);
     }
-
+    const logout = () =>
+    {
+        firebase.auth().signOut();
+        dispatch(
+            {
+                type: "LOGOUT",
+                payload: null,
+            }
+        );
+        history.push('/login');
+    };
     return (
         <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
             <Item key="home" icon={<HomeOutlined />}>
@@ -31,7 +47,7 @@ const Header = () =>
             key="user"
             icon={<SettingOutlined />}
             title="Username">
-                <Item key="setting:1">Log Out</Item>
+                <Item icon = {<UserOutlined />} onClick = {logout}>Log Out</Item>
                 <Item key="setting:2">Option 2</Item>
             </SubMenu>
       </Menu>

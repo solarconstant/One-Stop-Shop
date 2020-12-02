@@ -7,7 +7,7 @@ const RegisterCompletion = ({history}) =>         //destructure history from pro
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    useEffect(
+    useEffect(      //useEffect is used to implement componenedDidMount, etc hooks in functional components
         () => {
             setEmail(window.localStorage.getItem('emailForRegistration'));       //key of the item to get
             // console.log(window.location.href);
