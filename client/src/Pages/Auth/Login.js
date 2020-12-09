@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { auth, googleAuthProvider } from './.././../Firebase';
 import { toast } from 'react-toastify';
 import { Button } from 'antd';
 import { MailOutlined, GoogleOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom';
+import { createOrUpdateUser } from '../../Functions/auth';
+
 
 const Login = ({history}) =>
 {
@@ -12,6 +15,27 @@ const Login = ({history}) =>
     const [loading, setLoading] = useState('');     //For loading screen
 
     let dispatch = useDispatch();
+    const { user } = useSelector((state) => ({...state}));
+    
+    const roleBasedRedirect = (res) =>
+    {
+        if(res.data.role === 'admin')
+        {
+            history.push('/admin/dashboard');
+        }
+        else
+        {
+            history.push('/user/history');
+        }
+    }
+
+    useEffect(() =>
+    {
+        if(user && user.token)
+        {
+            history.push('/');
+        }
+    });
     const handleSubmit = async (event) =>
     {
         event.preventDefault();
@@ -22,17 +46,28 @@ const Login = ({history}) =>
             const { user } = result;
             const idTokenResult = await user.getIdTokenResult();
 
-            dispatch(
+            createOrUpdateUser(idTokenResult.token)
+            .then(
+                (res) =>
                 {
-                    type: "LOGGED_IN_USER",
-                    payload: {
-                        email: user.email,
-                        payload: idTokenResult.token,
-                    }
-                }
-            );
-
-            history.push('/');
+                    dispatch(
+                        {
+                            type: "LOGGED_IN_USER",
+                            payload: {
+                                name: res.data.name,
+                                email: res.data.email,
+                                token: idTokenResult.token,
+                                role: res.data.role,
+                                _id: res.data._id,
+                            },
+                        }
+                    );
+                    roleBasedRedirect(res);
+                } 
+            )
+            .catch(err => console.log(err));
+            
+            // history.push('/');
         }
         catch(error)
         {
@@ -48,16 +83,28 @@ const Login = ({history}) =>
             async (result) => {
                 const { user } = result;
                 const idTokenResult = await user.getIdTokenResult();
-                dispatch(
+
+                createOrUpdateUser(idTokenResult.token)
+                .then(
+                    (res) =>
                     {
-                        type: "LOGGED_IN_USER",
-                        payload: {
-                            email: user.email,
-                            token: idTokenResult.token
-                        }
-                    }
-                );
-                history.push('/');
+                        dispatch(
+                            {
+                                type: "LOGGED_IN_USER",
+                                payload: {
+                                    name: res.data.name,
+                                    email: res.data.email,
+                                    token: idTokenResult.token,
+                                    role: res.data.role,
+                                    _id: res.data._id,
+                                },
+                            }
+                        );
+                        roleBasedRedirect(res);
+                    } 
+                )
+                .catch(err => console.log(err));
+                // history.push('/');   Now, role based redirect is used
             }
         ).catch(err => {
             toast.error("err.message");
@@ -80,7 +127,10 @@ const Login = ({history}) =>
                 <div className = "col-md-6 offset-md-3">
                     {loading ? (<h4>Loading</h4>) : (<h4>Login</h4>)}
                     {loginForm()} 
-                    <Button onClick = {handleGoogleLogin} type = "danger" className = "mb-3" block shape = "round" icon = {<GoogleOutlined />} >Login with Google</Button>
+                    <Button onClick = {handleGoogleLogin} size = "large" type = "danger" className = "mb-3" block shape = "round" icon = {<GoogleOutlined />} >Login with Google</Button>
+                    <Link to = "/forgot/password" className = "float-right text-danger">
+                        Forgot Password
+                    </Link>
                 </div>
             </div>
         </div>
