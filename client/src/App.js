@@ -16,6 +16,8 @@ import History from '../src/Pages/User/History';
 import Password from '../src/Pages/User/Password';
 import Wishlist from '../src/Pages/User/Wishlist';
 import UserRoute from '../src/Components/Routes/UserRoute';
+import AdminRoute from '../src/Components/Routes/AdminRoute';
+import AdminDashboard from './Pages/Admin/AdminDashboard';
 
 function App() {
 
@@ -68,6 +70,7 @@ function App() {
         <UserRoute exact path = '/user/history' component = {History} />
         <UserRoute exact path = '/user/password' component = {Password} />
         <UserRoute exact path = '/user/wishlist' component = {Wishlist} />
+        <AdminRoute exact path = '/admin/dashboard' component = {AdminDashboard} />
       </Switch>
     </div>
   );
