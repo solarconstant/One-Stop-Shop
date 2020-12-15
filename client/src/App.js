@@ -18,6 +18,7 @@ import Wishlist from '../src/Pages/User/Wishlist';
 import UserRoute from '../src/Components/Routes/UserRoute';
 import AdminRoute from '../src/Components/Routes/AdminRoute';
 import AdminDashboard from './Pages/Admin/AdminDashboard';
+import CategoryCreate from './Pages/Admin/Category/CategoryCreate';
 
 function App() {
 
@@ -70,6 +71,8 @@ function App() {
         <UserRoute exact path = '/user/history' component = {History} />
         <UserRoute exact path = '/user/password' component = {Password} />
         <UserRoute exact path = '/user/wishlist' component = {Wishlist} />
+        <AdminRoute exact path = '/admin/dashboard' component = {AdminDashboard} />
+        <AdminRoute exact path = '/admin/category' component = {CategoryCreate} />
         <AdminRoute exact path = '/admin/dashboard' component = {AdminDashboard} />
       </Switch>
     </div>
