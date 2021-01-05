@@ -19,6 +19,7 @@ import UserRoute from '../src/Components/Routes/UserRoute';
 import AdminRoute from '../src/Components/Routes/AdminRoute';
 import AdminDashboard from './Pages/Admin/AdminDashboard';
 import CategoryCreate from './Pages/Admin/Category/CategoryCreate';
+import CategoryUpdate from './Pages/Admin/Category/CategoryUpdate';
 
 function App() {
 
@@ -74,6 +75,7 @@ function App() {
         <AdminRoute exact path = '/admin/dashboard' component = {AdminDashboard} />
         <AdminRoute exact path = '/admin/category' component = {CategoryCreate} />
         <AdminRoute exact path = '/admin/dashboard' component = {AdminDashboard} />
+        <AdminRoute exact path = '/admin/category/:slug' component = {CategoryUpdate} />
       </Switch>
     </div>
   );
