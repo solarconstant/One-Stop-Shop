@@ -27,7 +27,7 @@ const AdminRoute = ({children, ...rest}) =>
         }
     }, [user])
 
-    return user && user.token && ok ? (<Route {...rest} />) : (<LoadingToRedirectUser />)
+    return ok ? (<Route {...rest} />) : (<LoadingToRedirectUser />)
 }
 
 export default AdminRoute;

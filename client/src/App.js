@@ -20,6 +20,8 @@ import AdminRoute from '../src/Components/Routes/AdminRoute';
 import AdminDashboard from './Pages/Admin/AdminDashboard';
 import CategoryCreate from './Pages/Admin/Category/CategoryCreate';
 import CategoryUpdate from './Pages/Admin/Category/CategoryUpdate';
+import SubCategoryCreate from './Pages/Admin/Subcategory/SubCategoryCreate';
+import SubCategoryUpdate from './Pages/Admin/Subcategory/SubCategoryUpdate';
 
 function App() {
 
@@ -57,7 +59,7 @@ function App() {
 
     //cleanup
     return () => unsubscribe();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
@@ -75,7 +77,9 @@ function App() {
         <AdminRoute exact path = '/admin/dashboard' component = {AdminDashboard} />
         <AdminRoute exact path = '/admin/category' component = {CategoryCreate} />
         <AdminRoute exact path = '/admin/dashboard' component = {AdminDashboard} />
-        <AdminRoute exact path = '/admin/category/:slug' component = {CategoryUpdate} />
+        <AdminRoute exact path = "/admin/category/:slug" component = {CategoryUpdate} />
+        <AdminRoute exact path = "/admin/subcategory" component = {SubCategoryCreate} />
+        <AdminRoute exact path = "/admin/subcategory/:slug" component = {SubCategoryUpdate} />
       </Switch>
     </div>
   );

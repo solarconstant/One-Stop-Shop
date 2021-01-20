@@ -1,29 +1,29 @@
-const Category = require('../models/category');
+const SubCategory = require('../models/subcategory');
 const slugify = require('slugify');
 
 exports.create = async (req, res) =>
 {
     try
     {
-        const { name } = req.body;
-        const category = await new Category({name, slug: slugify(name).toLowerCase()}).save();
-        res.json(category);
+        const { name, parent } = req.body;
+        const subcategory = await new SubCategory({name, parent, slug: slugify(name)}).save();
+        res.json(subcategory);
     }
     catch(err)
     {
-        res.status(400).send('Create Category Failed');
+        res.status(400).send('Create SubCategory Failed');
     }
 };
 
 exports.list = async (req, res) =>
 {
-    res.json(await Category.find({}).sort({createdAt: -1}).exec());
+    res.json(await SubCategory.find({}).sort({createdAt: -1}).exec());
 };
 
 exports.update = async (req, res) => {
     const { name } = req.body;
     try {
-      const updated = await Category.findOneAndUpdate(
+      const updated = await SubCategory.findOneAndUpdate(
         { slug: req.params.slug },
         { name, slug: slugify(name) },
         { new: true }
@@ -38,7 +38,7 @@ exports.remove = async (req, res) =>
 {
     try
     {
-        const deleted = await Category.findOneAndDelete({slug: req.params.slug});
+        const deleted = await SubCategory.findOneAndDelete({slug: req.params.slug});
         res.json(deleted);
     }
     catch(err)
@@ -49,6 +49,6 @@ exports.remove = async (req, res) =>
 
 exports.read = async (req, res) =>
 {
-    let category = await Category.findOne({ slug: req.params.slug }).exec();
-    res.json(category);
+    let subcategory = await SubCategory.findOne({ slug: req.params.slug }).exec();
+    res.json(subcategory);
 };
