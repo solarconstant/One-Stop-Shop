@@ -1,2 +1,2 @@
-client/src/Firebase.js
-server/config/*
+*Firebase.js
+*firebaseServiceAccountKey.json
