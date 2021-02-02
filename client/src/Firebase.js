@@ -3,7 +3,7 @@ import 'firebase/auth';
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyAil1JtJakDkePeQMEwSTuxdVIZsHL1Wyg",
+    apiKey: process.env.FIREBASE_API_KEY,
     authDomain: "ecommerce-7f081.firebaseapp.com",
     databaseURL: "https://ecommerce-7f081.firebaseio.com",
     projectId: "ecommerce-7f081",
