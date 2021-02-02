@@ -21,16 +21,16 @@ exports.list = async (req, res) =>
 };
 
 exports.update = async (req, res) => {
-    const { name } = req.body;
+    const { name, parent } = req.body;
     try {
       const updated = await SubCategory.findOneAndUpdate(
         { slug: req.params.slug },
-        { name, slug: slugify(name) },
+        { name, parent, slug: slugify(name) },
         { new: true }
       );
       res.json(updated);
     } catch (err) {
-      res.status(400).send("Create update failed");
+      res.status(400).send("Update SubCategory failed");
     }
   };
 

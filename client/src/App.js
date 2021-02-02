@@ -22,6 +22,7 @@ import CategoryCreate from './Pages/Admin/Category/CategoryCreate';
 import CategoryUpdate from './Pages/Admin/Category/CategoryUpdate';
 import SubCategoryCreate from './Pages/Admin/Subcategory/SubCategoryCreate';
 import SubCategoryUpdate from './Pages/Admin/Subcategory/SubCategoryUpdate';
+import ProductCreate from './Pages/Admin/Product/ProductCreate';
 
 function App() {
 
@@ -80,6 +81,7 @@ function App() {
         <AdminRoute exact path = "/admin/category/:slug" component = {CategoryUpdate} />
         <AdminRoute exact path = "/admin/subcategory" component = {SubCategoryCreate} />
         <AdminRoute exact path = "/admin/subcategory/:slug" component = {SubCategoryUpdate} />
+        <AdminRoute exact path = "/admin/products" component = {ProductCreate} />
       </Switch>
     </div>
   );

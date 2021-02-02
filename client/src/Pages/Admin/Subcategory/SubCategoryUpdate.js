@@ -67,9 +67,9 @@ const SubCategoryUpdate = ({ history, match }) =>
                         <label htmlFor="category">Parent</label>
                     
                         <select name="category" id="" className = "form-control" onChange = {e => setParent(e.target.value)}>
-                            <option value="">Please Select a category</option>
+                            <option value={parent}>Please Select a category</option>
                             {categories.length > 0 && categories.map((c) => (
-                                <option key = {c._id} value = {c._id}>{c.name}</option>
+                                <option key = {c._id} value = {c._id} selected = {c._id === parent}>{c.name}</option>
                             ))}
                         </select>
                     </div>
