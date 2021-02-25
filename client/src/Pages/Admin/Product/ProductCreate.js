@@ -28,14 +28,16 @@ const ProductCreate = () =>
     {
         e.preventDefault();
         createProduct(values, user.token)
-        .then(res => 
+        .then((res) => 
             {
                 console.log(res);
+                window.alert(`"${res.data.title}" is created`);
+                window.location.reload();
             })
             .catch(err => 
                 {
                     console.log(err);
-                    if(err.response.status === 4000) toast.error(err.response.data);
+                    toast.error(err.response.data);
                 })
     };
 
@@ -47,7 +49,6 @@ const ProductCreate = () =>
                 [e.target.name] : e.target.value,
             }
         )
-        console.table(e.target.name, e.target.value);
     };
 
     return (

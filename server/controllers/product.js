@@ -10,6 +10,8 @@ exports.create = async (req, res) =>
         res.json(newProduct);
     } catch (err) {
         console.log(err);
-        res.status(400).send("Create Product Failed.")
+        res.status(400).json({
+            err: err.message,
+        });
     }
 };
