@@ -82,6 +82,7 @@ function App() {
         <AdminRoute exact path = "/admin/subcategory" component = {SubCategoryCreate} />
         <AdminRoute exact path = "/admin/subcategory/:slug" component = {SubCategoryUpdate} />
         <AdminRoute exact path = "/admin/products" component = {ProductCreate} />
+        <AdminRoute exact path = "/admin/product" component = {ProductCreate} />
       </Switch>
     </div>
   );

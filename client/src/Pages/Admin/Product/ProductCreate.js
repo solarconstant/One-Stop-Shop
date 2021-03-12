@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import { createProduct } from '../../../Functions/product';
 import CategoryForm from '../../../Components/Forms/CategoryForm';
 import LocalSearch from '../../../Components/Forms/LocalSearch';
+import ProductCreateForm  from '../../../Components/Forms/ProductCreateForm';
+import { getCategories, getCategorySubs } from '../../../Functions/category';
 
 const ProductCreate = () =>
 {
@@ -13,6 +15,7 @@ const ProductCreate = () =>
         title: '',
         description: '',
         price: '',
+        categories: [],
         category: '',
         subs: [],
         shipping: '',
@@ -23,6 +26,16 @@ const ProductCreate = () =>
     };
     const [values, setValues] = useState(initialState);
     const { user } = useSelector((state) => ({...state}));
+    const [subOptions, setsubOptions] = useState([]);
+
+    useEffect(() => {
+        loadCategories();
+    }, []);
+
+    const loadCategories = () =>
+    {
+        getCategories().then((c) => setValues({...values, categories : c.data}));
+    }
 
     const handleSubmit = (e) =>
     {
@@ -31,13 +44,13 @@ const ProductCreate = () =>
         .then((res) => 
             {
                 console.log(res);
-                window.alert(`"${res.data.title}" is created`);
+                toast.success(`"${res.data.title}" is created`);
                 window.location.reload();
             })
             .catch(err => 
                 {
                     console.log(err);
-                    toast.error(err.response.data);
+                    toast.error(err.response.data.err);
                 })
     };
 
@@ -51,6 +64,24 @@ const ProductCreate = () =>
         )
     };
 
+    const handleCategoryChange = (e) =>
+    {
+        e.preventDefault();
+        console.log("CLICKED CATEGORY ", e.target.value);
+        setValues(
+            {
+                ...values,
+                category : e.target.value,
+            }
+        )
+        getCategorySubs(e.target.value)
+        .then(res =>
+        {
+            console.log(res);
+            setsubOptions(res.data);
+        })
+    }
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -59,29 +90,9 @@ const ProductCreate = () =>
                 </div>
                 <div className="col-10">
                     <h4>Create Product</h4>
-                    <form onSubmit = {handleSubmit}>
-                        <div className="form-group">
-                            <label htmlFor="title">Title</label>
-                            <input type="text" name = 'title' className = 'form-control' value = {values.title} onChange = {handleChange} />
-                            <label htmlFor="description">Description</label>
-                            <input type="text" name = 'description' className = 'form-control' value = {values.description} onChange = {handleChange} />
-                            <label htmlFor="price">Price</label>
-                            <input type="number" name = 'price' className = 'form-control' value = {values.price} onChange = {handleChange} />
-                            <label htmlFor="shipping">Shipping</label>
-                            <select name="shipping" onChange = {handleChange}>
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                            <br/>
-                            <label htmlFor="quantity">Quantity</label>
-                            <input type="number" name = 'quantity' className = 'form-control' value = {values.quantity} onChange = {handleChange} />
-                            <label htmlFor="color">Color</label>
-                            <input type = "text" name = 'color' className = 'form-control' value = {values.color} onChange = {handleChange} />
-                            <label htmlFor="brand">Brand</label>
-                            <input type="text" name = "brand" className = 'form-control' value = {values.brand} onChange = {handleChange} />
-                        </div>
-                        <button className = "btn btn-outline-info">Submit</button>
-                    </form>
+                    <div className="form-group">
+                    </div>
+                    <ProductCreateForm handleSubmit = {handleSubmit} handleChange = {handleChange} values = {values} handleCategoryChange = {handleCategoryChange} />
                 </div>
             </div>
         </div>

@@ -13,6 +13,11 @@ const AdminNav = () =>
             </li>
             <li>
                 <Link to = '/admin/products' class = "nav-link">
+                    Product
+                </Link>
+            </li>
+            <li>
+                <Link to = '/admin/product' class = "nav-link">
                     Products
                 </Link>
             </li>
