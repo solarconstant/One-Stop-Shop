@@ -1,6 +1,8 @@
 import React from 'react';
+import { Select } from "antd";
+const { Option } = Select;
 
-const ProductCreateForm = ({ handleSubmit, handleChange, values, handleCategoryChange }) =>
+const ProductCreateForm = ({ handleSubmit, handleChange, values, handleCategoryChange, subOptions, showSub, setValues }) =>
 {
     return (
         <form onSubmit = {handleSubmit}>
@@ -30,13 +32,12 @@ const ProductCreateForm = ({ handleSubmit, handleChange, values, handleCategoryC
                             <option key = {c._id} value = {c._id}>{c.name}</option>
                         ))}
                     </select>
-                    <label htmlFor="category">SubCategory</label>
-                    <select name="category" id="" className = "form-control" onChange = {handleChange}>
-                        <option value="">Please Select a subcategory</option>
-                        {values.subs.length > 0 && values.subs.map((c) => (
-                            <option key = {c._id} value = {c._id}>{c.name}</option>
-                        ))}
-                    </select>
+                    {showSub && (<div>
+                        <label>Select Subcategories</label>
+                        <Select mode = "multiple" style = {{width: "100%"}} placeholder = "Select Subcategories" value = {values.subs} onChange = {e => setValues({...values, subs : e})}>
+                            {subOptions.length && subOptions.map((s) => (<Option key = {s._id} value = {s._id}>{s.name}</Option>))}
+                        </Select>
+                    </div>)}
             </div>
             <button className = "btn btn-outline-info">Submit</button>
         </form>

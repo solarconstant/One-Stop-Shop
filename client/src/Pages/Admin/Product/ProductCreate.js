@@ -8,6 +8,8 @@ import CategoryForm from '../../../Components/Forms/CategoryForm';
 import LocalSearch from '../../../Components/Forms/LocalSearch';
 import ProductCreateForm  from '../../../Components/Forms/ProductCreateForm';
 import { getCategories, getCategorySubs } from '../../../Functions/category';
+import FileUpload from '../../../Components/Forms/FileUpload';
+import { LoadingOutlined } from "@ant-design/icons";
 
 const ProductCreate = () =>
 {
@@ -27,6 +29,8 @@ const ProductCreate = () =>
     const [values, setValues] = useState(initialState);
     const { user } = useSelector((state) => ({...state}));
     const [subOptions, setsubOptions] = useState([]);
+    const [showSub, setshowSub] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         loadCategories();
@@ -71,6 +75,7 @@ const ProductCreate = () =>
         setValues(
             {
                 ...values,
+                subs : [],
                 category : e.target.value,
             }
         )
@@ -80,6 +85,7 @@ const ProductCreate = () =>
             console.log(res);
             setsubOptions(res.data);
         })
+        setshowSub(true);
     }
 
     return (
@@ -90,9 +96,18 @@ const ProductCreate = () =>
                 </div>
                 <div className="col-10">
                     <h4>Create Product</h4>
-                    <div className="form-group">
+                    {loading ? <LoadingOutlined /> : ""}
+                    <div className="p-3">
+                        <FileUpload values = {values} setValues = {setValues} setLoading = {setLoading}/>
                     </div>
-                    <ProductCreateForm handleSubmit = {handleSubmit} handleChange = {handleChange} values = {values} handleCategoryChange = {handleCategoryChange} />
+                    <ProductCreateForm 
+                        handleSubmit = {handleSubmit} 
+                        handleChange = {handleChange} 
+                        values = {values} 
+                        setValues = {setValues}
+                        handleCategoryChange = {handleCategoryChange} 
+                        subOptions = {subOptions}
+                        showSub = {showSub} />
                 </div>
             </div>
         </div>

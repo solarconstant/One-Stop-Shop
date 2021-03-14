@@ -63,6 +63,7 @@ exports.getSubs = async (req, res) =>
                 console.error(err);
             }
             res.json(subs);
+            console.log(subs);
         }
     )
 }
