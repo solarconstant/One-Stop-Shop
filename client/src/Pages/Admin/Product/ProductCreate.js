@@ -51,11 +51,11 @@ const ProductCreate = () =>
                 toast.success(`"${res.data.title}" is created`);
                 window.location.reload();
             })
-            .catch(err => 
-                {
-                    console.log(err);
-                    toast.error(err.response.data.err);
-                })
+        .catch(err => 
+            {
+                console.log(err);
+                toast.error(err.response.data.err);
+            })
     };
 
     const handleChange = (e) =>
